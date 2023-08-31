@@ -12,9 +12,9 @@ class Property
 {
     
     const HEAT = [
-      0 => 'electric',
-      1 => 'gaz',
-      2 => 'wood'
+      0 => 'Electric',
+      1 => 'Gaz',
+      2 => 'Bois'
     ];
     
     #[ORM\Id]
@@ -168,6 +168,10 @@ class Property
     public function getHeat(): ?int
     {
         return $this->heat;
+    }
+    public function getHeattYPE(): STRING
+    {
+        return self::HEAT[$this->heat];
     }
 
     public function setHeat(int $heat): static
