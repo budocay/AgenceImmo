@@ -52,4 +52,6 @@
 /.web-server-pid
 
 # Idea folder
-.idea
+.idea/
+
+.env
