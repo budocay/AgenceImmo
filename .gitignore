@@ -53,3 +53,5 @@
 
 # Idea folder
 .idea/
+
+.env
