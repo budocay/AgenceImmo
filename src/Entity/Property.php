@@ -55,7 +55,7 @@ class Property
     private ?string $postal_code = null;
 
     #[ORM\Column(options: ['default' => false])]
-    private ?bool $sold = null;
+    private ?bool $sold = false;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Property;
+use App\Repository\PropertyRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,11 +12,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PropertyController extends AbstractController
 {
+
+    /**
+     * @var PropertyRepository
+     */
+    private PropertyRepository $repository;
+
+    /**
+     * @var EntityManagerInterface
+     */
     private EntityManagerInterface $entityManager;
     
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, PropertyRepository $repository)
     {
         $this->entityManager = $registry->getManager();
+        $this->repository = $repository;
     }
     
     /**
@@ -25,19 +36,8 @@ class PropertyController extends AbstractController
     #[Route('/biens', name: 'property.index')]
     public function index(): Response
     {
-        $property = new Property();
-        $property->setTitle('Mon premier bien')
-            ->setPrice(200000)
-            ->setRooms(4)
-            ->setBedrooms(3)
-            ->setDescription('Une petite description')
-            ->setSurface(60)
-            ->setFloor(4)
-            ->setHeat(1)
-            ->setCity('Montpellier')
-            ->setAddress('15 boulevard Gambetta')
-            ->setPostalCode('34000');
-        $this->entityManager->persist($property);
+        $property = $this->repository->findAllVisible();
+        dump($property);
         return $this->render('property/index.html.twig', [
             'current_menu' => 'properties'
         ]);
