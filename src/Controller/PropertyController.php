@@ -48,7 +48,7 @@ class PropertyController extends AbstractController
         if ($property->getSlug() !== $slug) {
            return $this->redirectToRoute('property.show', [
                 'id' => $property->getId(),
-                'slig' => $property->getSlug()
+                'slug' => $property->getSlug()
             ], 301);
 
         }
