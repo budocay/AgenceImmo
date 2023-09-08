@@ -6,8 +6,11 @@ use App\Repository\PropertyRepository;
 use Cocur\Slugify\Slugify;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PropertyRepository::class)]
+#[UniqueEntity('title', message: 'Ce titre est déjà utilisé')]
 class Property
 {
     
@@ -23,18 +26,23 @@ class Property
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Length(min: 5, max: 255)]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Assert\Length(min: 5, max: 255)]
     private ?string $description = null;
 
     #[ORM\Column]
+    #[Assert\Range(min: 10, max: 400)]
     private ?int $surface = null;
 
     #[ORM\Column]
+    #[Assert\Range(min: 1, max: 20)]
     private ?int $rooms = null;
 
     #[ORM\Column]
+    #[Assert\Range(min: 1, max: 6)]
     private ?int $bedrooms = null;
 
     #[ORM\Column]
@@ -53,6 +61,7 @@ class Property
     private ?string $address = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Regex(pattern: '/^(?:0[1-9]|[1-8]\d|9[0-8])\d{3}$/', message: 'Code postal invalide')]
     private ?string $postal_code = null;
 
     #[ORM\Column(options: ['default' => false])]
